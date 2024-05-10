@@ -16,7 +16,7 @@ import bgimg3 from '../assets/images/d.img2.jpg'
 
 export default function Banner() {
   return (
-    <div className='py-10'>
+    <div className='md:py-10 py-4'>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}

@@ -1,6 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/images/logo.png";
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const handleSignOut = () => {
+    logOut().then().catch();
+  };
   const navLinks = (
     <>
       <li>
@@ -64,37 +70,49 @@ const Navbar = () => {
           <ul className="flex gap-6 text-sm">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <div className="dropdown dropdown-end">
-            <label
-              tabIndex={0}
-              className="btn btn-ghost btn-circle hover:bg-[#db4437] avatar"
-            >
-              <div className="w-10 rounded-full">
-                <img
-                  src={
-                    "https://i.ibb.co/D4DRmzc/istockphoto-1337144146-612x612.jpg"
-                  }
-                />
-              </div>
-            </label>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <button className="btn btn-sm  btn-ghost">
-                  <h1>Name</h1>
-                </button>
-              </li>
-              <li>
-                <button className="btn btn-sm  btn-ghost">Logout</button>
-              </li>
-            </ul>
-          </div>
-
-          <Link to="/login">
-            <button className="btn btn-sm  btn-ghost">Login</button>
-          </Link>
+          {user ? (
+            <div className="dropdown dropdown-end z-50">
+              <label tabIndex={0} className="btn btn-ghost hover:bg-[#db4437] btn-circle avatar">
+                <div title={user?.displayName} className="w-9 rounded-full">
+                  <img
+                    src={
+                      user?.photoURL ||
+                      "https://i.ibb.co/D4DRmzc/istockphoto-1337144146-612x612.jpg"
+                    }
+                  />
+                </div>
+              </label>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <Link to="/add-food" className="justify-between">Add a Food</Link>
+                </li>
+                <li>
+                  <Link to="/available-foods">Available Foods</Link>
+                </li>
+                <li>
+                  <Link to="/my-food-request"> My Food Request</Link>
+                </li>
+                <li>
+                  <Link to="/manage-my-foods">Manage My Foods</Link>
+                </li>
+                <li>
+                  <button
+                    onClick={handleSignOut}
+                    className="btn btn-sm  btn-ghost"
+                  >
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <Link to="/login">
+              <button className="btn btn-sm  btn-ghost">Login</button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

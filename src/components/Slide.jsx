@@ -1,3 +1,5 @@
+
+
 const Slide = ({ image, text }) => {
   return (
     <div
@@ -7,15 +9,13 @@ const Slide = ({ image, text }) => {
       }}
     >
       <div className="flex items-center justify-center w-full h-full bg-gray-900/70">
-        <div className="text-center w-40 md:w-full">
-          <h1 className="md:text-3xl font-semibold text-white">{text}</h1>
+        <div className="text-center w-60 md:w-full">
+          <h1 className="md:text-3xl font-semibold text-white">
+            {text}
+          </h1>
           <br />
-          <button className="btn btn-ghost border-white hover:bg-[#db4437] text-white font-bold mr-6">
-            Learn More
-          </button>
-          <button className="btn btn-ghost border-white hover:bg-[#db4437] text-white font-bold">
-            About Us
-          </button>
+          <button className='btn btn-ghost border-white hover:bg-[#db4437] text-white md:font-bold mr-6'>Learn More</button>
+            <button className='btn btn-ghost border-white hover:bg-[#db4437] text-white md:font-bold'>About Us</button>
         </div>
       </div>
     </div>
