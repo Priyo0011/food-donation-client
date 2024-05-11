@@ -1,19 +1,28 @@
-import { useState } from "react";
-import useAuth from "../hooks/useAuth";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useState } from "react";
+import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
+import axios from "axios";
 
-const AddFood = () => {
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const [startDate, setStartDate] = useState(new Date());
+const UpdateFood = () => {
+    const { user } = useAuth();
+    const navigate = useNavigate()
+    const [startDate, setStartDate] = useState(new Date());
+    const food = useLoaderData()
+    const {
+        food_image,
+        food_name,
+        food_quantity,
+        pickup_location,
+        additional_notes,
+        _id
+      } = food || {};
 
-  const handleAddFood = async (e) => {
-    e.preventDefault();
-    const food_name = e.target.food_name.value;
+      const handleFormSubmit = async e => {
+        e.preventDefault()
+        const food_name = e.target.food_name.value;
     const food_image = e.target.food_image.value;
     const donator_name =e.target.donator_name.value;
     const email =e.target.email.value;
@@ -23,33 +32,32 @@ const AddFood = () => {
     const additional_notes = e.target.additional_notes.value;
     const expired_date = e.target.expired_date.value;
 
-
     const foodData ={
-      food_image,
-      food_name,
-      donator_name,
-      food_quantity,
-      pickup_location,
-      expired_date,
-      additional_notes,
-      food_status,
-      donator:{
-        email,
-      },
-      donator_image: user?.photoURL
+        food_image,
+        food_name,
+        donator_name,
+        food_quantity,
+        pickup_location,
+        expired_date,
+        additional_notes,
+        food_status,
+        donator:{
+          email,
+        },
+        donator_image: user?.photoURL
+      }
+      try {
+        const { data } = await axios.put(`http://localhost:9000/food/${_id}`,foodData)
+        console.log(data)
+        toast.success('Food Data Update Successfully!')
+        navigate('/manage-foods')
+      } catch (err) {
+        console.log(err)
+        toast.error(err.message)
+      }
     }
-    try {
-      const { data } = await axios.post('http://localhost:9000/food',foodData)
-      console.log(data)
-      toast.success('Food Data Add Successfully!')
-      navigate('/manage-foods')
-    } catch (err) {
-      console.log(err)
-      toast.error(err.message)
-    }
-  }
-  return (
-    <div>
+    return (
+        <div>
       <div className="bg-[#fff9f9] mt-10">
         <div className="flex items-center w-full mt-6 gap-x-3 shrink-0 sm:w-auto">
           <button
@@ -75,10 +83,10 @@ const AddFood = () => {
           </button>
         </div>
         <h2 className="text-3xl font-extrabold text-center p-10 text-[#db4437] ">
-          Post a Food
+          Update a Food
         </h2>
         <div className="md:px-24 px-8   md:pb-24 pb-8">
-          <form onSubmit={handleAddFood}>
+          <form onSubmit={handleFormSubmit}>
             <div className="md:flex mb-8">
               <div className="form-control md:w-1/2">
                 <label className="label">
@@ -90,6 +98,7 @@ const AddFood = () => {
                     name="food_name"
                     placeholder="add your food name"
                     className="input input-bordered w-full"
+                    defaultValue={food_name}
                   />
                 </label>
               </div>
@@ -103,6 +112,7 @@ const AddFood = () => {
                     name="food_image"
                     placeholder="Photo URL"
                     className="input input-bordered w-full"
+                    defaultValue={food_image}
                   />
                 </label>
               </div>
@@ -119,6 +129,7 @@ const AddFood = () => {
                     name="food_quantity"
                     placeholder="add quantity food"
                     className="input input-bordered w-full"
+                    defaultValue={food_quantity}
                   />
                 </label>
               </div>
@@ -132,6 +143,7 @@ const AddFood = () => {
                     name="pickup_location"
                     placeholder="add pickup location"
                     className="input input-bordered w-full"
+                    defaultValue={pickup_location}
                   />
                 </label>
               </div>
@@ -208,20 +220,21 @@ const AddFood = () => {
                     name="additional_notes"
                     placeholder="additional notes"
                     className="input input-bordered w-full h-20"
+                    defaultValue={additional_notes}
                   />
                 </label>
               </div>
             </div>
             <input
               type="submit"
-              value="Add Food"
+              value="Update Food"
               className="btn btn-block bg-[#db4437] text-white"
             />
           </form>
         </div>
       </div>
     </div>
-  );
+    );
 };
 
-export default AddFood;
+export default UpdateFood;

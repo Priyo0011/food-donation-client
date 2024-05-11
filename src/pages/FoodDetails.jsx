@@ -11,12 +11,10 @@ const FoodDetails = () => {
     food_image,
     food_name,
     donator_name,
-
     food_quantity,
     pickup_location,
     expired_date,
     additional_notes,
-
     _id,
   } = food || {};
 

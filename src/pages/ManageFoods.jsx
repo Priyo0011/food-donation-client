@@ -116,7 +116,7 @@ const ManageFoods = () => {
                           </button>
 
                           <Link
-                            // to={`/update/${job._id}`}
+                            to={`/update/${food._id}`}
                             className='text-gray-500 transition-colors duration-200   hover:text-green-500 focus:outline-none'
                           >
                             <svg
