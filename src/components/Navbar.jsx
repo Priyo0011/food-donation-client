@@ -75,6 +75,7 @@ const Navbar = () => {
               <label tabIndex={0} className="btn btn-ghost hover:bg-[#db4437] btn-circle avatar">
                 <div title={user?.displayName} className="w-9 rounded-full">
                   <img
+                    referrerPolicy='no-referrer'
                     src={
                       user?.photoURL ||
                       "https://i.ibb.co/D4DRmzc/istockphoto-1337144146-612x612.jpg"
@@ -90,13 +91,10 @@ const Navbar = () => {
                   <Link to="/add-food" className="justify-between">Add a Food</Link>
                 </li>
                 <li>
-                  <Link to="/available-foods">Available Foods</Link>
-                </li>
-                <li>
                   <Link to="/my-food-request"> My Food Request</Link>
                 </li>
                 <li>
-                  <Link to="/manage-my-foods">Manage My Foods</Link>
+                  <Link to="/manage-foods">Manage My Foods</Link>
                 </li>
                 <li>
                   <button
