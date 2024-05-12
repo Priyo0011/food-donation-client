@@ -1,16 +1,16 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { FaMapLocationDot } from "react-icons/fa6";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 const FoodDetails = () => {
   const { user } = useAuth();
   const food = useLoaderData();
-
-  const [startDate, setStartDate] = useState(new Date())
+  const navigate = useNavigate();
+  const [startDate, setStartDate] = useState(new Date());
 
   const {
     food_image,
@@ -23,18 +23,20 @@ const FoodDetails = () => {
     _id,
   } = food || {};
 
-  const handleFormSubmission = async e => {
-    e.preventDefault()
+  const handleFormSubmission = async (e) => {
+    e.preventDefault();
 
-    const reqId = _id
+    const reqId = _id;
     const food_name = e.target.food_name.value;
     const food_image = e.target.food_image.value;
     const request_date = e.target.request_date.value;
     const pickup_location = e.target.pickup_location.value;
     const additional_notes = e.target.additional_notes.value;
-    const email = user?.email
-    const requestData ={
-      reqId,email,food_image,
+    const email = user?.email;
+    const requestData = {
+      reqId,
+      email,
+      food_image,
       food_name,
       donator_name,
       food_quantity,
@@ -42,23 +44,30 @@ const FoodDetails = () => {
       expired_date,
       request_date,
       additional_notes,
-    }
-    try{
-      const {data} = await axios.post('http://localhost:9000/request',requestData)
+    };
+    try {
+      const { data } = await axios.post(
+        "http://localhost:9000/request",
+        requestData
+      );
       console.log(data);
-      toast.success('Food request Successfully!')
-    }catch (err){
-      toast.success(err.response.data)
+      toast.success("Food request Successfully!");
+      navigate("/my-food-request");
+    } catch (err) {
+      toast.success(err.response.data);
       console.log(err);
     }
-  }
+  };
+
   return (
     <div className=" flex bg-[#fff9f9] shadow-lg mt-10">
       <div className="card-body">
         <div className="px-12">
-          <h1 className="text-xl font-extrabold text-[#db4437]">Donor Information:</h1>
-          <h3 className="font-bold">Donar Name :
-            <span className="font-normal ml-3">{donator_name}</span>
+          <h1 className="text-xl font-extrabold text-[#db4437]">
+            Donor Information:
+          </h1>
+          <h3 className="font-bold">
+            Donar Name :<span className="font-normal ml-3">{donator_name}</span>
           </h3>
           <div className="flex items-center">
             <FaMapLocationDot />
@@ -87,7 +96,6 @@ const FoodDetails = () => {
             </p>
           </div>
 
-          
           <p>
             Additional Notes :
             <span className="ml-2 font-light">{additional_notes}</span>
@@ -143,9 +151,7 @@ const FoodDetails = () => {
                 />
               </label>
             </div>
-            <div>
-            
-            </div>
+            <div></div>
             <div className="form-control md:w-1/2 md:ml-4">
               <label className="label">
                 <span className="label-text font-bold">Food Donator Name</span>
@@ -168,25 +174,23 @@ const FoodDetails = () => {
                 <span className="label-text font-bold">Expired Date</span>
               </label>
               <label className="input-group">
-              <input
+                <input
                   type="text"
                   name="expired_date"
-                  
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md   focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
                   disabled
                   defaultValue={food.expired_date}
-                  
                 />
               </label>
             </div>
-            <div className='flex flex-col gap-2 mt-2 ml-3'>
-              <label className='label-text font-bold'>Request Date</label>
+            <div className="flex flex-col gap-2 mt-2 ml-3">
+              <label className="label-text font-bold">Request Date</label>
               <DatePicker
-                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md   focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring'
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md   focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
                 name="request_date"
                 selected={startDate}
                 disabled
-                onChange={date => setStartDate(date)}
+                onChange={(date) => setStartDate(date)}
               />
             </div>
             <div className="form-control md:w-1/2 md:ml-4">
