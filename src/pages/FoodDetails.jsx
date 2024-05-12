@@ -3,9 +3,14 @@ import { FaMapLocationDot } from "react-icons/fa6";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { useState } from "react";
 const FoodDetails = () => {
   const { user } = useAuth();
   const food = useLoaderData();
+
+  const [startDate, setStartDate] = useState(new Date())
 
   const {
     food_image,
@@ -24,6 +29,7 @@ const FoodDetails = () => {
     const reqId = _id
     const food_name = e.target.food_name.value;
     const food_image = e.target.food_image.value;
+    const request_date = e.target.request_date.value;
     const pickup_location = e.target.pickup_location.value;
     const additional_notes = e.target.additional_notes.value;
     const email = user?.email
@@ -34,6 +40,7 @@ const FoodDetails = () => {
       food_quantity,
       pickup_location,
       expired_date,
+      request_date,
       additional_notes,
     }
     try{
@@ -136,6 +143,9 @@ const FoodDetails = () => {
                 />
               </label>
             </div>
+            <div>
+            
+            </div>
             <div className="form-control md:w-1/2 md:ml-4">
               <label className="label">
                 <span className="label-text font-bold">Food Donator Name</span>
@@ -168,6 +178,16 @@ const FoodDetails = () => {
                   
                 />
               </label>
+            </div>
+            <div className='flex flex-col gap-2 mt-2 ml-3'>
+              <label className='label-text font-bold'>Request Date</label>
+              <DatePicker
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md   focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring'
+                name="request_date"
+                selected={startDate}
+                disabled
+                onChange={date => setStartDate(date)}
+              />
             </div>
             <div className="form-control md:w-1/2 md:ml-4">
               <label className="label">
