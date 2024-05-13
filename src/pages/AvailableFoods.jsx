@@ -4,20 +4,24 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const AvailableFoods = () => {
-  const [itemsPerPage, setItemsPerPage] = useState(2);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
   const [count, setCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1)
-  const [foods, setFoods] = useState([])
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sort, setSort] = useState('');
+  const [search, setSearch] = useState('')
+  const [searchText, setSearchText] = useState('')
+  const [foods, setFoods] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
-      const { data } = await axios(`http://localhost:9000/all-foods?page=${currentPage}&size=${itemsPerPage}`)
+      const { data } = await axios(`http://localhost:9000/all-foods?page=${currentPage}&size=${itemsPerPage}&sort=${sort}&search=${search}`)
       setFoods(data)
     }
     getData()
-  }, [currentPage,itemsPerPage])
+  }, [currentPage,itemsPerPage,sort,search])
   useEffect(() => {
     const getCount = async () => {
-      const { data } = await axios('http://localhost:9000/foods-count')
+      const { data } = await axios(`http://localhost:9000/foods-count?filter=&search=${search}`)
 
       setCount(data.count)
     }
@@ -31,16 +35,21 @@ const AvailableFoods = () => {
     setCurrentPage(value)
   }
 
+  const handleSearch = e => {
+    e.preventDefault()
+
+    setSearch(searchText)
+  }
   return (
-    <div>
+    <div onSubmit={handleSearch}>
       <div className="flex flex-col md:flex-row justify-center items-center gap-5 my-10">
         <form>
           <div className="flex p-1 overflow-hidden border rounded-lg    focus-within:ring focus-within:ring-opacity-40 focus-within:border-[#db4437] focus-within:ring-[#db4437]">
             <input
               className="px-6 py-2 text-gray-700 placeholder-gray-500 bg-white outline-none focus:placeholder-transparent"
               type="text"
-              // onChange={e => setSearchText(e.target.value)}
-              // value={searchText}
+              onChange={e => setSearchText(e.target.value)}
+              value={searchText}
               name="search"
               placeholder="Enter Food Name"
               aria-label="Enter Food Name"
@@ -53,11 +62,11 @@ const AvailableFoods = () => {
         </form>
         <div>
           <select
-            //   onChange={e => {
-            //     setSort(e.target.value)
-            //     setCurrentPage(1)
-            //   }}
-            //   value={sort}
+              onChange={e => {
+                setSort(e.target.value)
+                setCurrentPage(1)
+              }}
+              value={sort}
             name="sort"
             id="sort"
             className="border p-4 rounded-md"
@@ -74,7 +83,7 @@ const AvailableFoods = () => {
         ))}
       </div>
       <div className="flex justify-center mt-12">
-        {/* Previous Button */}
+
         <button
             disabled={currentPage === 1}
             onClick={() => handlePaginationButton(currentPage - 1)}
@@ -99,7 +108,7 @@ const AvailableFoods = () => {
             <span className="mx-1">previous</span>
           </div>
         </button>
-        {/* Numbers */}
+
         {pages.map(btnNum => (
           <button
             onClick={() => handlePaginationButton(btnNum)}
@@ -112,7 +121,7 @@ const AvailableFoods = () => {
             {btnNum}
           </button>
         ))}
-        {/* Next Button */}
+
         <button
             disabled={currentPage === numberOfPages}
             onClick={() => handlePaginationButton(currentPage + 1)}
