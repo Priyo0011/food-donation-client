@@ -30,6 +30,7 @@ const FoodDetails = () => {
     const food_name = e.target.food_name.value;
     const food_image = e.target.food_image.value;
     const request_date = e.target.request_date.value;
+    const donator_email = e.target.donator_email.value;
     const pickup_location = e.target.pickup_location.value;
     const additional_notes = e.target.additional_notes.value;
     const email = user?.email;
@@ -44,6 +45,7 @@ const FoodDetails = () => {
       expired_date,
       request_date,
       additional_notes,
+      donator_email
     };
     try {
       const { data } = await axios.post(

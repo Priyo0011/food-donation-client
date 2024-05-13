@@ -9,11 +9,14 @@ import AddFood from "../pages/AddFood";
 import ManageFoods from "../pages/ManageFoods";
 import UpdateFood from "../pages/UpdateFood";
 import MyFoodReq from "../pages/MyFoodReq";
+import PrivateRoute from "./PrivateRoute";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement:<ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -22,7 +25,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/available-foods",
-        element: <AvailableFoods></AvailableFoods>,
+        element: <PrivateRoute>
+          <AvailableFoods></AvailableFoods>
+        </PrivateRoute>,
         loader:()=>fetch(`http://localhost:9000/foods`)
       },
       {
@@ -35,7 +40,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/food/:id",
-        element: <FoodDetails></FoodDetails>,
+        element:<PrivateRoute>
+          <FoodDetails></FoodDetails>
+        </PrivateRoute>,
         loader:({params})=>fetch(`http://localhost:9000/food/${params.id}`)
       },
       {

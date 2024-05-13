@@ -41,9 +41,7 @@ const UpdateFood = () => {
         expired_date,
         additional_notes,
         food_status,
-        donator:{
-          email,
-        },
+        donator_email,
         donator_image: user?.photoURL
       }
       try {
@@ -200,7 +198,7 @@ const UpdateFood = () => {
                 <label className="input-group">
                   <input
                     type="text"
-                    name="email"
+                    name="donator_email"
                     className="block w-full p-3 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md   focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
                     defaultValue={user?.email}
                     disabled

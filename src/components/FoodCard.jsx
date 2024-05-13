@@ -14,7 +14,7 @@ const FoodCard = ({ food }) => {
     _id,
   } = food || {};
   return (
-    <div className=" bg-base-200 shadow-lg">
+    <div className="bg-base-200 hover:shadow-lg hover:shadow-gray-200 rounded-lg">
       <figure>
         <img className="h-[240px] w-full p-4 " src={food_image} alt="" />
       </figure>
@@ -39,7 +39,7 @@ const FoodCard = ({ food }) => {
           <p>
             <span>Food Quantity: </span>
             <span className="font-light bg-[#fae0de] rounded-full p-1">
-              {food_quantity} box
+              {food_quantity}
             </span>
           </p>
           <p>

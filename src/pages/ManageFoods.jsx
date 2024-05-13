@@ -14,7 +14,7 @@ const ManageFoods = () => {
   }, [user]);
 
   const getData = async () => {
-    const { data } = await axios(`http://localhost:9000/foods/${user?.email}`);
+    const { data } = await axios(`http://localhost:9000/foods/${user?.email}`,{withCredentials:true});
     setFoods(data);
   };
   
