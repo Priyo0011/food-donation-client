@@ -11,7 +11,7 @@ const SocialLogin = () => {
     try {
       const result = await googleLogin();
       const { data } = await axios.post(
-        "http://localhost:9000/jwt",
+        "https://food-donation-servers.vercel.app/jwt",
         {
           email: result?.user?.email,
         },
@@ -29,7 +29,7 @@ const SocialLogin = () => {
     try {
       const result = await githubLogin();
       const { data } = await axios.post(
-        "http://localhost:9000/jwt",
+        "https://food-donation-servers.vercel.app/jwt",
         {
           email: result?.user?.email,
         },

@@ -49,7 +49,7 @@ const FoodDetails = () => {
     };
     try {
       const { data } = await axios.post(
-        "http://localhost:9000/request",
+        "https://food-donation-servers.vercel.app/request",
         requestData
       );
       console.log(data);

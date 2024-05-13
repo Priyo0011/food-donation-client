@@ -25,7 +25,7 @@ const UpdateFood = () => {
         const food_name = e.target.food_name.value;
     const food_image = e.target.food_image.value;
     const donator_name =e.target.donator_name.value;
-    const email =e.target.email.value;
+    const donator_email =e.target.donator_email.value;
     const food_quantity =e.target.food_quantity.value;
     const pickup_location = e.target.pickup_location.value;
     const food_status = e.target.food_status.value;
@@ -45,7 +45,7 @@ const UpdateFood = () => {
         donator_image: user?.photoURL
       }
       try {
-        const { data } = await axios.put(`http://localhost:9000/food/${_id}`,foodData)
+        const { data } = await axios.put(`https://food-donation-servers.vercel.app/food/${_id}`,foodData)
         console.log(data)
         toast.success('Food Data Update Successfully!')
         navigate('/manage-foods')

@@ -14,13 +14,13 @@ const ManageFoods = () => {
   }, [user]);
 
   const getData = async () => {
-    const { data } = await axios(`http://localhost:9000/foods/${user?.email}`,{withCredentials:true});
+    const { data } = await axios(`https://food-donation-servers.vercel.app/foods/${user?.email}`,{withCredentials:true});
     setFoods(data);
   };
   
   const handleDelete = async (id) => {
     try {
-        const { data } = await axios.delete(`http://localhost:9000/food/${id}`)
+        const { data } = await axios.delete(`https://food-donation-servers.vercel.app/food/${id}`)
         console.log(data)
         toast.success('Delete Successful')
         getData()

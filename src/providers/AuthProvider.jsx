@@ -56,17 +56,15 @@ import axios from "axios";
           const userEmail = currentUser?.email || user?.email;
           const loggedUser = { email: userEmail };
           setUser(currentUser);
-          console.log('current user', currentUser);
           setLoading(false);
   
           if (currentUser) {
-              axios.post('http://localhost:9000/jwt', loggedUser, { withCredentials: true })
+              axios.post('https://food-donation-servers.vercel.app/jwt', loggedUser, { withCredentials: true })
                   .then(res => {
-                      console.log('token response', res.data);
                   })
           }
           else {
-              axios.post('http://localhost:9000/logout', loggedUser, {
+              axios.post('https://food-donation-servers.vercel.app/logout', loggedUser, {
                   withCredentials: true
               })
                   .then(res => {

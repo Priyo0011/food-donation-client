@@ -39,7 +39,7 @@ const AddFood = () => {
       donator_image: user?.photoURL
     }
     try {
-      const { data } = await axios.post('http://localhost:9000/food',foodData)
+      const { data } = await axios.post('https://food-donation-servers.vercel.app/food',foodData)
       console.log(data)
       toast.success('Food Data Add Successfully!')
       navigate('/manage-foods')

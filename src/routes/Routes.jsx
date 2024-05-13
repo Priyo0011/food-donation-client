@@ -21,14 +21,13 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-        loader:()=>fetch(`http://localhost:9000/foods`)
+        loader:()=>fetch(`https://food-donation-servers.vercel.app/foods`)
       },
       {
         path: "/available-foods",
         element: <PrivateRoute>
           <AvailableFoods></AvailableFoods>
         </PrivateRoute>,
-        // loader:()=>fetch(`http://localhost:9000/foods`)
       },
       {
         path: "/login",
@@ -43,12 +42,12 @@ const router = createBrowserRouter([
         element:<PrivateRoute>
           <FoodDetails></FoodDetails>
         </PrivateRoute>,
-        loader:({params})=>fetch(`http://localhost:9000/food/${params.id}`)
+        loader:({params})=>fetch(`https://food-donation-servers.vercel.app/food/${params.id}`)
       },
       {
         path: "/update/:id",
         element: <UpdateFood></UpdateFood>,
-        loader:({params})=>fetch(`http://localhost:9000/food/${params.id}`)
+        loader:({params})=>fetch(`https://food-donation-servers.vercel.app/food/${params.id}`)
       },
       {
         path: "/add-food",

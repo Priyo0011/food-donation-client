@@ -14,19 +14,19 @@ const AvailableFoods = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const { data } = await axios(`http://localhost:9000/all-foods?page=${currentPage}&size=${itemsPerPage}&sort=${sort}&search=${search}`)
+      const { data } = await axios(`https://food-donation-servers.vercel.app/all-foods?page=${currentPage}&size=${itemsPerPage}&sort=${sort}&search=${search}`)
       setFoods(data)
     }
     getData()
   }, [currentPage,itemsPerPage,sort,search])
   useEffect(() => {
     const getCount = async () => {
-      const { data } = await axios(`http://localhost:9000/foods-count?filter=&search=${search}`)
+      const { data } = await axios(`https://food-donation-servers.vercel.app/foods-count?filter=&search=${search}`)
 
       setCount(data.count)
     }
     getCount()
-  }, [])
+  }, [search])
   const numberOfPages = Math.ceil(count / itemsPerPage)
   const pages = [...Array(numberOfPages).keys()].map(element => element + 1)
 

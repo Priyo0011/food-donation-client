@@ -12,7 +12,7 @@ const MyFoodReq = () => {
   }, [user]);
 
   const getData = async () => {
-    const { data } = await axios(`http://localhost:9000/request/${user?.email}`);
+    const { data } = await axios(`https://food-donation-servers.vercel.app/request/${user?.email}`);
     setRequest(data);
     
   };
