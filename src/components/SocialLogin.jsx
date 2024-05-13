@@ -25,6 +25,24 @@ const SocialLogin = () => {
       toast.error(err?.message);
     }
   };
+  const handleGithubSignIn = async () => {
+    try {
+      const result = await githubLogin();
+      const { data } = await axios.post(
+        "http://localhost:9000/jwt",
+        {
+          email: result?.user?.email,
+        },
+        { withCredentials: true }
+      );
+      console.log(data)
+      toast.success("SignIn SuccessFul");
+      navigate(-1);
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.message);
+    }
+  };
 
   return (
     <div className="flex mt-8 gap-16 ml-96">
@@ -35,7 +53,7 @@ const SocialLogin = () => {
         <FaGoogle className="text-white" />
       </button>
       <button
-        onClick={() => githubLogin()}
+        onClick={() => handleGithubSignIn()}
         className="btn btn-ghost bg-[#db4437] text-3xl rounded-lg "
       >
         <FaGithub className="text-white" />
